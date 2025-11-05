@@ -1,0 +1,6 @@
+namespace WolfiksHeavyTroopers;
+
+class ItemCreator
+{
+    
+}

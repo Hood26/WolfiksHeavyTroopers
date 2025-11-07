@@ -1,0 +1,34 @@
+{
+  "Items": {
+    "heavy_tan": {
+      "Id": "690be27992b93c91540ad4df",
+      "Name": "TAN Heavy Trooper Mask",
+      "ShortName": "TNHTP",
+      "Description": "Желтая баллистическая маска, сделанна компанией KMCompany для шлемов Ops-Core."
+    },
+    "heavy_coyote": {
+      "Id": "690be27992b93c91540ad4e0",
+      "Name": "COYOTE Heavy Trooper Mask",
+      "ShortName": "CYTHTP",
+      "Description": "Койотовая баллистическая маска, сделанна компанией KMCompany для шлемов Team Wendy EXFIL."
+    },
+    "heavy_black": {
+      "Id": "690be27992b93c91540ad4e1",
+      "Name": "BLACK Heavy Trooper Mask",
+      "ShortName": "BLKHTP",
+      "Description": "Черная баллистическая маска, сделанна компанией KMCompany для шлемов Ops-Core."
+    },
+    "heavy_wolf": {
+      "Id": "690be27992b93c91540ad4e2",
+      "Name": "WOLF Heavy Trooper Mask",
+      "ShortName": "WLFHTP",
+      "Description": "Селф мейд забрало созданное из баллистической маски Heavy Trooper."
+    },
+    "heavy_cult": {
+      "Id": "690be27992b93c91540ad4e3",
+      "Name": "CULTIST Heavy Trooper Mask",
+      "ShortName": "CULTHTP",
+      "Description": "Странно задекорированная баллистическая маска."
+    }
+  }
+}

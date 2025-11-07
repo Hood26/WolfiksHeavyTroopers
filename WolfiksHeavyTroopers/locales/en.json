@@ -1,0 +1,34 @@
+{
+  "Items": {
+    "heavy_tan": {
+      "Id": "690be27992b93c91540ad4df",
+      "Name": "TAN Heavy Trooper Mask",
+      "ShortName": "TNHTP",
+      "Description": "Tan ballistic faceshield made by KMCompany for Ops-Core helmets."
+    },
+    "heavy_coyote": {
+      "Id": "690be27992b93c91540ad4e0",
+      "Name": "COYOTE Heavy Trooper Mask",
+      "ShortName": "CYTHTP",
+      "Description": "Coyote ballistic faceshield by KMCompany made for Team Wendy EXFIL helmets."
+    },
+    "heavy_black": {
+      "Id": "690be27992b93c91540ad4e1",
+      "Name": "BLACK Heavy Trooper Mask",
+      "ShortName": "BLKHTP",
+      "Description": "Black ballistic faceshield made by KMCompany for Ops-Core helmets."
+    },
+    "heavy_wolf": {
+      "Id": "690be27992b93c91540ad4e2",
+      "Name": "WOLF Heavy Trooper Mask",
+      "ShortName": "WLFHTP",
+      "Description": "A faceshield, probably selfmade out of ballisitc heavy trooper mask."
+    },
+    "heavy_cult": {
+      "Id": "690be27992b93c91540ad4e3",
+      "Name": "CULTIST Heavy Trooper Mask",
+      "ShortName": "CULTHTP",
+      "Description": "Some kind of weird decorated ballistic mask."
+    }
+  }
+}

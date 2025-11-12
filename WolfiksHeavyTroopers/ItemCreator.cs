@@ -21,7 +21,7 @@ class ItemCreator
 
     public void BuildItems(CustomItemService customItemService)
     {
-        foreach (var (name, props) in config.Items)
+        foreach (var (name, props) in config.Config)
         {
             var newItem = new NewItemFromCloneDetails
             {

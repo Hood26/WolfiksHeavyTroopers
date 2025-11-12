@@ -1,68 +1,96 @@
 {
-  // Mod configuration for WolfiksHeavyTroopers
+  // Mod Configurations For WolfiksHeavyTroopers
   // ======================================
-  // Any true/false or integers can be changed and will be used on server restart.
-  // DO NOT change any of the strings as that WILL cause issues.
-  "Items": {
-    "heavy_tan": { // Most common
+  // Any true/false or integers can be changed and will be set on SPT server restart.
+  // DO NOT edit any of the string names for any and all config option as that WILL cause issues.
+  "Config": {
+    "Coyote_Mask": {
+      // enables or disables the mask in-game.
       "enable": true,
+      // toggles whether the mask will be sold by Peacekeeper in-game.
       "sold_by_trader": true,
+      // toggles whether mask is locked behind quest reward
+      "quest_required": false,
+      // toggles whether the mask will be able to be bought and sold on the flea-market
       "flea_banned": false,
-      "trader_price": 1500,
+      // Price of the mask in Dollars sold by Peacekeeper
+      "trader_price": 1000,
+      // Price in Roubles for the average selling price on the flea-market
       "flea_price": 200000,
-      "handbook_price": 200000,
+      // The Quick Sell price of the mask when sold to a trader (Kinda)
+      "handbook_price": 100000,
+      // How many masks that can be bought from trader during refresh period
       "trader_stock": 2,
+      // Loyalty level the mask will be sold from Peacekeeper
       "loyalty_level": 3,
+      // Masks armour level is defined here
       "armor_class_level": 3,
+      // Durability that the mask will be sold at from Peacekeeper
       "durability": 45,
+      // Maximum durabilty the mask can hold.
       "max_durability": 45,
-      "static_loot_probabilities": {
-        "5909d89086f77472591234a0": 35, // Weapon Box 1
-        "5909d7cf86f77470ee57d75a": 35, // Weapon Box 2
-        "5909d76c86f77471e53d2adf": 35, // Weapon Box 3
-        "5909d5ef86f77467974efbd8": 35, // Weapon Box 4
-        "5d6d2b5486f774785c2ba8ea": 35, // Ground Cache
-        "578f87ad245977356274f2cc": 15, // Wooden Crate
-        "578f87a3245977356274f2cb": 20, // Duffle Bag
-        "5909e4b686f7747f5b744fa4": 30  // Dead Scav
+      // static_loot_container_probabilities Information:
+      //   - container_name: number (heavy trooper mask loot weight per container)
+      //
+      //   What this means:
+      //      - Weights are relative. Item chance inside a container = heavy trooper mask weight / sum(all other item weights in that container).
+      //      - Weights only affect selection inside that container's static loot pool; they do NOT change how often the container spawns.
+      //      - 0 means excluded. Increasing one weight reduces others' share. Use smaller weights for rarer items.
+      //
+      //   These preset numbers I've chosen are pretty low so the masks will be rare to find in-game.
+      //      - I haven't done as much testing with this so I hope they are rare. :)
+      "static_loot_container_probabilities": {
+        "weapon_box_5x5": 35, // Weapon Box 1
+        "weapon_box_4x4": 35, // Weapon Box 2
+        "weapon_box_6x3": 35, // Weapon Box 3 (6 height x 3 width loot grid)
+        "weapon_box_5x2": 35, // Weapon Box 4
+        "ground_cache_4x4": 35, // Ground Cache
+        "wooden_crate_5x2": 15, // Wooden Crate
+        "duffle_bag_4x3": 20, // Duffle Bag
+        "dead_scav_4x4": 30 // Dead Scav
+        // if you want to add more containers you would...
+        //"item_tpl": integer       // static loot container
       }
     },
-    "heavy_coyote": {
+    "Tan_Mask": {
       "enable": true,
       "sold_by_trader": true,
+      "quest_required": false,
       "flea_banned": false,
-      "trader_price": 1700,
-      "flea_price": 225000,
-      "handbook_price": 225000,
-      "trader_stock": 2,
-      "loyalty_level": 3,
-      "armor_class_level": 3,
-      "durability": 45,
-      "max_durability": 45,
-      "static_loot_probabilities": {
-        "5909d89086f77472591234a0": 35, // Weapon Box 1
-        "5909d7cf86f77470ee57d75a": 35, // Weapon Box 2
-        "5909d76c86f77471e53d2adf": 35, // Weapon Box 3
-        "5909d5ef86f77467974efbd8": 35, // Weapon Box 4
-        "5d6d2b5486f774785c2ba8ea": 35, // Ground Cache
-        "578f87ad245977356274f2cc": 15, // Wooden Crate
-        "578f87a3245977356274f2cb": 20, // Duffle Bag
-        "5909e4b686f7747f5b744fa4": 30  // Dead Scav
-      }
-    },
-    "heavy_black": {
-      "enable": true,
-      "sold_by_trader": true,
-      "flea_banned": false,
-      "trader_price": 2250,
+      "trader_price": 1600,
       "flea_price": 300000,
-      "handbook_price": 300000,
+      "handbook_price": 175000,
       "trader_stock": 2,
       "loyalty_level": 4,
       "armor_class_level": 4,
-      "durability": 60,
-      "max_durability": 60,
-      "static_loot_probabilities": {
+      "durability": 45,
+      "max_durability": 45,
+      "static_loot_container_probabilities": {
+        "weapon_box_5x5": 35,
+        "weapon_box_4x4": 35,
+        "weapon_box_6x3": 35,
+        "weapon_box_5x2": 35,
+        "ground_cache_4x4": 35,
+        "wooden_crate_5x2": 15,
+        "duffle_bag_4x3": 20,
+        "dead_scav_4x4": 30
+
+      }
+    },
+    "Black_Mask": {
+      "enable": true,
+      "sold_by_trader": true,
+      "quest_required": false,
+      "flea_banned": false,
+      "trader_price": 1600,
+      "flea_price": 300000,
+      "handbook_price": 175000,
+      "trader_stock": 2,
+      "loyalty_level": 4,
+      "armor_class_level": 4,
+      "durability": 45,
+      "max_durability": 45,
+      "static_loot_container_probabilities": {
         // Armor Class 4
         "5909d89086f77472591234a0": 35, // Weapon Box 1
         "5909d7cf86f77470ee57d75a": 35, // Weapon Box 2
@@ -71,55 +99,57 @@
         "5d6d2b5486f774785c2ba8ea": 35, // Ground Cache
         "578f87ad245977356274f2cc": 15, // Wooden Crate
         "578f87a3245977356274f2cb": 20, // Duffle Bag
-        "5909e4b686f7747f5b744fa4": 30  // Dead Scav
+        "5909e4b686f7747f5b744fa4": 30 // Dead Scav
       }
     },
-    "heavy_wolf": {
+    "Wolf_Mask": {
       "enable": true,
       "sold_by_trader": true,
+      "quest_required": false,
       "flea_banned": false,
-      "trader_price": 3250,
-      "flea_price": 400000,
-      "handbook_price": 400000,
+      "trader_price": 2500,
+      "flea_price": 450000,
+      "handbook_price": 250000,
       "trader_stock": 2,
       "loyalty_level": 4,
-      "armor_class_level": 4,
-      "durability": 80,
-      "max_durability": 80,
-      "static_loot_probabilities": {
+      "armor_class_level": 5,
+      "durability": 60,
+      "max_durability": 60,
+      "static_loot_container_probabilities": {
         // Armor Class 5, rare and expensive
         "5909d89086f77472591234a0": 20, // Weapon Box 1
         "5909d7cf86f77470ee57d75a": 20, // Weapon Box 2
         "5909d76c86f77471e53d2adf": 20, // Weapon Box 3
         "5909d5ef86f77467974efbd8": 20, // Weapon Box 4
         "5d6d2b5486f774785c2ba8ea": 25, // Ground Cache
-        "578f87ad245977356274f2cc": 5,  // Wooden Crate
+        "578f87ad245977356274f2cc": 5, // Wooden Crate
         "578f87a3245977356274f2cb": 15, // Duffle Bag
-        "5909e4b686f7747f5b744fa4": 20  // Dead Scav
+        "5909e4b686f7747f5b744fa4": 20 // Dead Scav
       }
     },
-    "heavy_cult": {
+    "Cultist_Mask": {
       "enable": true,
       "sold_by_trader": true,
+      "quest_required": false,
       "flea_banned": false,
-      "trader_price": 5000,
-      "flea_price": 550000,
-      "handbook_price": 550000,
+      "trader_price": 3500,
+      "flea_price": 666666,
+      "handbook_price": 333333,
       "trader_stock": 2,
       "loyalty_level": 4,
       "armor_class_level": 5,
-      "durability": 85,
-      "max_durability": 85,
-      "static_loot_probabilities": {
+      "durability": 80,
+      "max_durability": 80,
+      "static_loot_container_probabilities": {
         // Armor Class 5, extremely rare, and expensive cultist mask
         "5909d89086f77472591234a0": 15, // Weapon Box 1
         "5909d7cf86f77470ee57d75a": 15, // Weapon Box 2
         "5909d76c86f77471e53d2adf": 15, // Weapon Box 3
         "5909d5ef86f77467974efbd8": 15, // Weapon Box 4
         "5d6d2b5486f774785c2ba8ea": 20, // Ground Cache
-        "578f87ad245977356274f2cc": 5,  // Wooden Crate
+        "578f87ad245977356274f2cc": 5, // Wooden Crate
         "578f87a3245977356274f2cb": 10, // Duffle Bag
-        "5909e4b686f7747f5b744fa4": 20  // Dead Scav
+        "5909e4b686f7747f5b744fa4": 20 // Dead Scav
       }
     }
   }

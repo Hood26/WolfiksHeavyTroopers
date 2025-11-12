@@ -11,9 +11,7 @@ using SPTarkov.Server.Core.Services.Mod;
 using SPTarkov.Server.Core.Models.Spt.Config;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Eft.Common;
-using Microsoft.VisualBasic;
 using SPTarkov.Server.Core.Models.Common;
-using System.ComponentModel.Design;
 using JetBrains.Annotations;
 using System.Text.Json;
 using System.Text.Encodings.Web;
@@ -55,12 +53,62 @@ public class WolfiksHeavyTroopers(
         var pathToMod = modHelper.GetAbsolutePathToModFolder(Assembly.GetExecutingAssembly());
         var configPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(pathToMod, "config"));
         var itemPropsPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(pathToMod, "locales"));
-        var config = modHelper.GetJsonDataFromFile<ModConfig>(configPath, "config.jsonc");
+        var modConfig = modHelper.GetJsonDataFromFile<ModConfig>(configPath, "config.jsonc");
         var masks = modHelper.GetJsonDataFromFile<Masks>(itemPropsPath, "en.json");
-        var ItemCreator = new ItemCreator(logger, config, masks);
-        var traderHelper = new TraderHelper(databaseService, logger, config, masks);
+        var tables = db.GetTables();
+        var ItemCreator = new ItemCreator(logger, modConfig, masks);
+        var traderHelper = new TraderHelper(db, databaseService, logger, modConfig, masks);
         ItemCreator.BuildItems(customItemService);
         traderHelper.addMasksToTrader("5935c25fb3acc3127c3d8cd9");
+        traderHelper.addMasksToQuests();
+
+        string[] defaultHelmets =
+        [
+            "5a154d5cfcdbcb001a3b00da",
+            "5ac8d6885acfc400180ae7b0",
+            "5b432d215acfc4771e1c6624",
+            "5ea05cf85ad9772e6624305d",
+            "5e01ef6886f77445f643baa4",
+            "5e00c1ad86f774747333222c"
+        ];
+
+        string[] conflictingFaceCoverings =
+        [
+            "5e71f6be86f77429f2683c44",
+            "5b4325355acfc40019478126",
+            "5e54f76986f7740366043752",
+            "5e71fad086f77422443d4604",
+            "572b7fa524597762b747ce82",
+            "5ab8f85d86f7745cd93a1cf5",
+        ];
+
+        foreach (var (maskName, maskProps) in masks.Items)
+        {
+            if (tables?.Templates?.Items == null) continue;
+
+            // Add masks to every helmet filter
+            foreach (var helmet in defaultHelmets)
+            {
+                if (tables.Templates.Items.TryGetValue(helmet, out var currentHelmet))
+                {
+                    currentHelmet.Properties?.Slots?.ElementAt(1).Properties?.Filters?.ElementAt(0).Filter?.Add(maskProps.Id);
+                }
+            }
+            
+            foreach (var currentFaceConvering in conflictingFaceCoverings)
+            {
+                if (tables.Templates.Items.TryGetValue(maskProps.Id, out var currentMask))
+                {
+                    currentMask.Properties?.ConflictingItems?.Remove(currentFaceConvering);
+                }
+            }
+        }
+
+        // Ideas:
+        //      Use: Item chance inside a container = heavy trooper mask weight / sum(all other item weights in that container).
+        //      -  Use this formula to set a percentage chance for the mask to spawn in the contaier.
+        //      -  Use this instead of a weight number for better control of spawn rates.....
+        //      -  We can also calculate the spawn chance of example items to get a better idea of spawn rates of energy drinks, gear, and other items
 
         logger.Success("Wolfiks Heavy Troopers successfully add to server!");
         return Task.CompletedTask;

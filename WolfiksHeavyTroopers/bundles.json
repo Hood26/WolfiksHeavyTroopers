@@ -1,0 +1,44 @@
+{
+	"manifest": [
+        {
+			"key": "assets/Wolf_Mask.bundle",
+			"dependencyKeys": [
+                "shaders",
+                "cubemaps",
+                "assets/commonassets/physics/physicsmaterials.bundle"
+            ]
+        },
+		{
+			"key": "assets/Tan_Mask.bundle",
+			"dependencyKeys": [
+                "shaders",
+                "cubemaps",
+                "assets/commonassets/physics/physicsmaterials.bundle"
+            ]
+        },
+		{
+			"key": "assets/Black_Mask.bundle",
+			"dependencyKeys": [
+                "shaders",
+                "cubemaps",
+                "assets/commonassets/physics/physicsmaterials.bundle"
+            ]
+        },
+		{
+			"key": "assets/Cultist_Mask.bundle",
+			"dependencyKeys": [
+                "shaders",
+                "cubemaps",
+                "assets/commonassets/physics/physicsmaterials.bundle"
+            ]
+        },
+		{
+			"key": "assets/Coyote_Mask.bundle",
+			"dependencyKeys": [
+                "shaders",
+                "cubemaps",
+                "assets/commonassets/physics/physicsmaterials.bundle"
+            ]
+        }
+    ]
+}

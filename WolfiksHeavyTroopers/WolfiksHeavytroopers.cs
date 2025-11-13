@@ -16,6 +16,8 @@ using JetBrains.Annotations;
 using System.Text.Json;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using System.Runtime.InteropServices;
+using SPTarkov.Server.Core.Models.Eft.Inventory;
 
 namespace WolfiksHeavyTroopers;
 
@@ -58,9 +60,11 @@ public class WolfiksHeavyTroopers(
         var tables = db.GetTables();
         var ItemCreator = new ItemCreator(logger, modConfig, masks);
         var traderHelper = new TraderHelper(db, databaseService, logger, modConfig, masks);
+        var botHelper = new BotHelper(db, databaseService, logger, modConfig, masks);
         ItemCreator.BuildItems(customItemService);
         traderHelper.addMasksToTrader("5935c25fb3acc3127c3d8cd9");
         traderHelper.addMasksToQuests();
+        botHelper.addCultistMaskToCultistLoadout();
 
         string[] defaultHelmets =
         [
@@ -82,6 +86,34 @@ public class WolfiksHeavyTroopers(
             "5ab8f85d86f7745cd93a1cf5",
         ];
 
+        string[] maps =
+        [
+            "bigmap",      // customs
+            "factory4_day",
+            "factory4_night",
+            "woods",
+            "rezervbase",
+            "shoreline",
+            "interchange",
+            "tarkovstreets",
+            "lighthouse",
+            "laboratory",
+            "sandbox",     // groundzero
+            "sandbox_high" // groundzero_lvl_20+
+        ];
+
+        Dictionary<string, string> lootContainerMap = new()
+        {
+            { "weapon_box_5x5", "5909d89086f77472591234a0" },
+            { "weapon_box_4x4", "5909d7cf86f77470ee57d75a" },
+            { "weapon_box_6x3", "5909d76c86f77471e53d2adf" },
+            { "weapon_box_5x2", "5909d5ef86f77467974efbd8" },
+            { "ground_cache_4x4", "5d6d2b5486f774785c2ba8ea" },
+            { "wooden_crate_5x2", "578f87ad245977356274f2cc" },
+            { "duffle_bag_4x3", "578f87a3245977356274f2cb" },
+            { "dead_scav_4x4", "5909e4b686f7747f5b744fa4" },
+        };
+
         foreach (var (maskName, maskProps) in masks.Items)
         {
             if (tables?.Templates?.Items == null) continue;
@@ -94,7 +126,6 @@ public class WolfiksHeavyTroopers(
                     currentHelmet.Properties?.Slots?.ElementAt(1).Properties?.Filters?.ElementAt(0).Filter?.Add(maskProps.Id);
                 }
             }
-            
             foreach (var currentFaceConvering in conflictingFaceCoverings)
             {
                 if (tables.Templates.Items.TryGetValue(maskProps.Id, out var currentMask))
@@ -104,12 +135,51 @@ public class WolfiksHeavyTroopers(
             }
         }
 
-        // Ideas:
-        //      Use: Item chance inside a container = heavy trooper mask weight / sum(all other item weights in that container).
-        //      -  Use this formula to set a percentage chance for the mask to spawn in the contaier.
-        //      -  Use this instead of a weight number for better control of spawn rates.....
-        //      -  We can also calculate the spawn chance of example items to get a better idea of spawn rates of energy drinks, gear, and other items
+        foreach (var (maskConfigName, maskConfigProps) in modConfig.Config)
+        {
+            if (masks.Items.TryGetValue(maskConfigName, out var maskProps))
+            {
+                foreach (var map in maps)
+                {
+                    string mapName = tables.Locations.GetMappedKey(map);
+                    var location = tables.Locations.GetDictionary()[mapName];
+                    var mapStaticLoot = location?.StaticLoot?.Value;
+                    var staticLooProbabilities = maskConfigProps.static_loot_container_probabilities;
 
+                    foreach (var (lootContainerString, probability) in staticLooProbabilities)
+                    {
+                        var lootContainer = lootContainerMap[lootContainerString];
+                        try
+                        {
+                            var newProbability = new ItemDistribution
+                            {
+                                Tpl = maskProps.Id,
+                                RelativeProbability = probability
+                            };
+
+                            var list = mapStaticLoot[lootContainer].ItemDistribution?.ToList() ?? new List<ItemDistribution>();
+                            list.Add(newProbability);
+                            mapStaticLoot[lootContainer].ItemDistribution = list;
+
+                            location.StaticLoot.AddTransformer(lazyLoadedStaticLoot =>
+                            {
+                                if (lazyLoadedStaticLoot == null) return lazyLoadedStaticLoot;
+                                if (!lazyLoadedStaticLoot.TryGetValue(lootContainer, out StaticLootDetails? details)) return lazyLoadedStaticLoot;
+
+                                var updatedItemDistribution = details.ItemDistribution?.ToList() ?? new List<ItemDistribution>();
+                                updatedItemDistribution.Add(newProbability);
+                                lazyLoadedStaticLoot[lootContainer].ItemDistribution = updatedItemDistribution;
+                                return lazyLoadedStaticLoot;
+                            });
+                        }
+                        catch
+                        {
+                            logger.Error($"[Wolfiks Heavy Troopers] Could not add {maskConfigName} to container {lootContainerString} on map {map}");
+                        }
+                    }
+                }
+            }
+        }
         logger.Success("Wolfiks Heavy Troopers successfully add to server!");
         return Task.CompletedTask;
     }

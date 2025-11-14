@@ -7,9 +7,9 @@
     "Coyote_Mask": {
       // enables or disables the mask in-game.
       // IMPORTANT: if you disable any mask you MUST make sure you have deleted or sold any left over masks in your inventory and on your PMC
-      //   or the server will yell at you and mess up your save file!!!!
+      //   or the server will throw errors at you and mess up your save file!!!!
       "enable": true,
-      // toggles whether the mask will be sold by Peacekeeper in-game.
+      // toggles whether the mask will be sold by Peacekeeper in-game
       "sold_by_trader": true,
       // toggles whether mask is locked behind quest reward
       "quest_required": false,
@@ -29,7 +29,7 @@
       "armor_class_level": 3,
       // Durability that the mask will be sold at from Peacekeeper
       "durability": 45,
-      // Maximum durabilty the mask can hold.
+      // Maximum durabilty the mask can hold
       "max_durability": 45,
       // static_loot_container_probabilities Information:
       //   - container_name: number (heavy trooper mask loot weight per container)
@@ -44,14 +44,12 @@
       "static_loot_container_probabilities": {
         "weapon_box_5x5": 30,   // Weapon Box 1
         "weapon_box_4x4": 60,   // Weapon Box 2
-        "weapon_box_6x3": 60,   // Weapon Box 3 (6 height x 3 width loot grid)
+        "weapon_box_6x3": 60,   // Weapon Box 3 (6 width x 3 height loot grid)
         "weapon_box_5x2": 60,   // Weapon Box 4
         "ground_cache_4x4": 40, // Ground Cache
         "wooden_crate_5x2": 40, // Wooden Crate
         "duffle_bag_4x3": 60,   // Duffle Bag
         "dead_scav_4x4": 60     // Dead Scav
-        // if you want to add more containers you would...
-        //"item_tpl": integer       // static loot container
       }
     },
     "Tan_Mask": {

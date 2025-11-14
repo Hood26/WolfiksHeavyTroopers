@@ -6,6 +6,8 @@
   "Config": {
     "Coyote_Mask": {
       // enables or disables the mask in-game.
+      // IMPORTANT: if you disable any mask you MUST make sure you have deleted or sold any left over masks in your inventory and on your PMC
+      //   or the server will yell at you and mess up your save file!!!!
       "enable": true,
       // toggles whether the mask will be sold by Peacekeeper in-game.
       "sold_by_trader": true,
@@ -14,11 +16,11 @@
       // toggles whether the mask will be able to be bought and sold on the flea-market
       "flea_banned": false,
       // Price of the mask in Dollars sold by Peacekeeper
-      "trader_price": 1000,
+      "trader_price": 1200,
       // Price in Roubles for the average selling price on the flea-market
-      "flea_price": 200000,
+      "flea_price": 250000,
       // The Quick Sell price of the mask when sold to a trader (Kinda)
-      "handbook_price": 100000,
+      "handbook_price": 150000,
       // How many masks that can be bought from trader during refresh period
       "trader_stock": 2,
       // Loyalty level the mask will be sold from Peacekeeper
@@ -38,16 +40,16 @@
       //      - 0 means excluded. Increasing one weight reduces others' share. Use smaller weights for rarer items.
       //
       //   These preset numbers I've chosen are pretty low so the masks will be rare to find in-game.
-      //      - I haven't done as much testing with this so I hope they are rare. :)
+
       "static_loot_container_probabilities": {
-        "weapon_box_5x5": 35, // Weapon Box 1
-        "weapon_box_4x4": 35, // Weapon Box 2
-        "weapon_box_6x3": 35, // Weapon Box 3 (6 height x 3 width loot grid)
-        "weapon_box_5x2": 35, // Weapon Box 4
-        "ground_cache_4x4": 35, // Ground Cache
-        "wooden_crate_5x2": 15, // Wooden Crate
-        "duffle_bag_4x3": 20, // Duffle Bag
-        "dead_scav_4x4": 30 // Dead Scav
+        "weapon_box_5x5": 30,   // Weapon Box 1
+        "weapon_box_4x4": 60,   // Weapon Box 2
+        "weapon_box_6x3": 60,   // Weapon Box 3 (6 height x 3 width loot grid)
+        "weapon_box_5x2": 60,   // Weapon Box 4
+        "ground_cache_4x4": 40, // Ground Cache
+        "wooden_crate_5x2": 40, // Wooden Crate
+        "duffle_bag_4x3": 60,   // Duffle Bag
+        "dead_scav_4x4": 60     // Dead Scav
         // if you want to add more containers you would...
         //"item_tpl": integer       // static loot container
       }
@@ -57,23 +59,23 @@
       "sold_by_trader": true,
       "quest_required": false,
       "flea_banned": false,
-      "trader_price": 1600,
-      "flea_price": 300000,
-      "handbook_price": 175000,
+      "trader_price": 2000,
+      "flea_price": 375000,
+      "handbook_price": 250000,
       "trader_stock": 2,
       "loyalty_level": 4,
       "armor_class_level": 4,
-      "durability": 45,
-      "max_durability": 45,
+      "durability": 50,
+      "max_durability": 50,
       "static_loot_container_probabilities": {
-        "weapon_box_5x5": 35,
+        "weapon_box_5x5": 15,
         "weapon_box_4x4": 35,
         "weapon_box_6x3": 35,
         "weapon_box_5x2": 35,
-        "ground_cache_4x4": 35,
-        "wooden_crate_5x2": 15,
-        "duffle_bag_4x3": 20,
-        "dead_scav_4x4": 30
+        "ground_cache_4x4": 25,
+        "wooden_crate_5x2": 25,
+        "duffle_bag_4x3": 35,
+        "dead_scav_4x4": 35
 
       }
     },
@@ -82,74 +84,71 @@
       "sold_by_trader": true,
       "quest_required": false,
       "flea_banned": false,
-      "trader_price": 1600,
-      "flea_price": 300000,
-      "handbook_price": 175000,
+      "trader_price": 2000,
+      "flea_price": 375000,
+      "handbook_price": 250000,
       "trader_stock": 2,
       "loyalty_level": 4,
       "armor_class_level": 4,
-      "durability": 45,
-      "max_durability": 45,
+      "durability": 50,
+      "max_durability": 50,
       "static_loot_container_probabilities": {
-        // Armor Class 4
-        "weapon_box_5x5": 35, // Weapon Box 1
-        "weapon_box_4x4": 35, // Weapon Box 2
-        "weapon_box_6x3": 35, // Weapon Box 3
-        "weapon_box_5x2": 35, // Weapon Box 4
-        "ground_cache_4x4": 35, // Ground Cache
-        "wooden_crate_5x2": 15, // Wooden Crate
-        "duffle_bag_4x3": 20, // Duffle Bag
-        "dead_scav_4x4": 30 // Dead Scav
+        "weapon_box_5x5": 15,
+        "weapon_box_4x4": 35,
+        "weapon_box_6x3": 35,
+        "weapon_box_5x2": 35,
+        "ground_cache_4x4": 25,
+        "wooden_crate_5x2": 25,
+        "duffle_bag_4x3": 35,
+        "dead_scav_4x4": 35
       }
     },
     "Wolf_Mask": {
       "enable": true,
       "sold_by_trader": true,
-      "quest_required": false,
+      "quest_required": true, // Peacekeeper "Wet Job - Part 5" Quest
       "flea_banned": false,
-      "trader_price": 2500,
-      "flea_price": 475000,
-      "handbook_price": 250000,
+      "trader_price": 3000,
+      "flea_price": 525000,
+      "handbook_price": 300000,
       "trader_stock": 2,
       "loyalty_level": 4,
       "armor_class_level": 5,
       "durability": 60,
       "max_durability": 60,
       "static_loot_container_probabilities": {
-        // Armor Class 5, rare and expensive
-        "weapon_box_5x5": 20, // Weapon Box 1
-        "weapon_box_4x4": 20, // Weapon Box 2
-        "weapon_box_6x3": 20, // Weapon Box 3
-        "weapon_box_5x2": 20, // Weapon Box 4
-        "ground_cache_4x4": 25, // Ground Cache
-        "wooden_crate_5x2": 5, // Wooden Crate
-        "duffle_bag_4x3": 15, // Duffle Bag
-        "dead_scav_4x4": 20 // Dead Scav
+        "weapon_box_5x5": 5,
+        "weapon_box_4x4": 15,
+        "weapon_box_6x3": 15,
+        "weapon_box_5x2": 15,
+        "ground_cache_4x4": 10,
+        "wooden_crate_5x2": 10,
+        "duffle_bag_4x3": 15,
+        "dead_scav_4x4": 15
       }
     },
     "Cultist_Mask": {
       "enable": true,
       "sold_by_trader": true,
-      "quest_required": false,
+      "quest_required": true, // Peacekeeper "The Guide" Quest
       "flea_banned": false,
       "trader_price": 3500,
       "flea_price": 666666,
-      "handbook_price": 333333,
+      "handbook_price": 400000,
       "trader_stock": 2,
       "loyalty_level": 4,
       "armor_class_level": 5,
       "durability": 80,
       "max_durability": 80,
       "static_loot_container_probabilities": {
-        // Armor Class 5, extremely rare, and expensive cultist mask
-        "weapon_box_5x5": 15, // Weapon Box 1
-        "weapon_box_4x4": 15, // Weapon Box 2
-        "weapon_box_6x3": 15, // Weapon Box 3
-        "weapon_box_5x2": 15, // Weapon Box 4
-        "ground_cache_4x4": 20, // Ground Cache
-        "wooden_crate_5x2": 5, // Wooden Crate
-        "duffle_bag_4x3": 10, // Duffle Bag
-        "dead_scav_4x4": 20 // Dead Scav
+        "weapon_box_5x5": 5,
+        "weapon_box_4x4": 15,
+        "weapon_box_6x3": 15,
+        "weapon_box_5x2": 15,
+        "ground_cache_4x4": 10,
+        "wooden_crate_5x2": 10,
+        "duffle_bag_4x3": 15,
+        "dead_scav_4x4": 15
       }
     }
   }

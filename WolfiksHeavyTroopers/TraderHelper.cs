@@ -54,14 +54,14 @@ class TraderHelper
 
             // Add masks to Peacekeeper QuestAssort
             if (tables.Traders.TryGetValue(peacekeeper, out var trader)) {
-                logger.Success($"Adding {maskName} to Peacekeeper QuestAssort");
+                //logger.Success($"Adding {maskName} to Peacekeeper QuestAssort");
                 trader.QuestAssort["success"].Add(masks.Items[maskName].ItemAssortId, masks.Items[maskName].QuestId);
             }
 
             // Add mask to quest reward
             if (quests.TryGetValue(masks.Items[maskName].QuestId, out var quest) && quest is not null)
             {
-                logger.Success($"Creating {maskName} Reward");
+                //logger.Success($"Creating {maskName} Reward");
                 var reward = new Reward
                 {
                     AvailableInGameEditions = [],
@@ -86,7 +86,7 @@ class TraderHelper
 
                 if (quest.Rewards!.TryGetValue("Success", out var rewards))
                 {
-                    logger.Success($"Adding {maskName} to Reward");
+                    //logger.Success($"Adding {maskName} to Reward");
                     rewards.Add(reward);
                 }
             }

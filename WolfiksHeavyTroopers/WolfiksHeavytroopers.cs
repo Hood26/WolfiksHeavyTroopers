@@ -23,7 +23,7 @@ namespace WolfiksHeavyTroopers;
 
 public record ModMetadata : AbstractModMetadata
 {
-    public override string Name { get; init; } = "SerWolfikHeavyTroopers";
+    public override string Name { get; init; } = "Wolfiks Heavy Troopers";
     public override string Author { get; init; } = "Hood";
     public override List<string>? Contributors { get; init; }
     public override SemanticVersioning.Version Version { get; init; } = new("1.1.0");
@@ -61,72 +61,26 @@ public class WolfiksHeavyTroopers(
         var ItemCreator = new ItemCreator(logger, modConfig, masks);
         var traderHelper = new TraderHelper(db, databaseService, logger, modConfig, masks);
         var botHelper = new BotHelper(db, databaseService, logger, modConfig, masks);
+        var maskUtil = new MaskUtil();
         ItemCreator.BuildItems(customItemService);
         traderHelper.addMasksToTrader("5935c25fb3acc3127c3d8cd9");
         traderHelper.addMasksToQuests();
         botHelper.addCultistMaskToCultistLoadout();
 
-        string[] defaultHelmets =
-        [
-            "5a154d5cfcdbcb001a3b00da",
-            "5ac8d6885acfc400180ae7b0",
-            "5b432d215acfc4771e1c6624",
-            "5ea05cf85ad9772e6624305d",
-            "5e01ef6886f77445f643baa4",
-            "5e00c1ad86f774747333222c"
-        ];
-
-        string[] conflictingFaceCoverings =
-        [
-            "5e71f6be86f77429f2683c44",
-            "5b4325355acfc40019478126",
-            "5e54f76986f7740366043752",
-            "5e71fad086f77422443d4604",
-            "572b7fa524597762b747ce82",
-            "5ab8f85d86f7745cd93a1cf5",
-        ];
-
-        string[] maps =
-        [
-            "bigmap",      // customs
-            "factory4_day",
-            "factory4_night",
-            "woods",
-            "rezervbase",
-            "shoreline",
-            "interchange",
-            "tarkovstreets",
-            "lighthouse",
-            "laboratory",
-            "sandbox",     // groundzero
-            "sandbox_high" // groundzero_lvl_20+
-        ];
-
-        Dictionary<string, string> lootContainerMap = new()
-        {
-            { "weapon_box_5x5", "5909d89086f77472591234a0" },
-            { "weapon_box_4x4", "5909d7cf86f77470ee57d75a" },
-            { "weapon_box_6x3", "5909d76c86f77471e53d2adf" },
-            { "weapon_box_5x2", "5909d5ef86f77467974efbd8" },
-            { "ground_cache_4x4", "5d6d2b5486f774785c2ba8ea" },
-            { "wooden_crate_5x2", "578f87ad245977356274f2cc" },
-            { "duffle_bag_4x3", "578f87a3245977356274f2cb" },
-            { "dead_scav_4x4", "5909e4b686f7747f5b744fa4" },
-        };
 
         foreach (var (maskName, maskProps) in masks.Items)
         {
             if (tables?.Templates?.Items == null) continue;
 
             // Add masks to every helmet filter
-            foreach (var helmet in defaultHelmets)
+            foreach (var helmet in maskUtil.defaultHelmets)
             {
                 if (tables.Templates.Items.TryGetValue(helmet, out var currentHelmet))
                 {
                     currentHelmet.Properties?.Slots?.ElementAt(1).Properties?.Filters?.ElementAt(0).Filter?.Add(maskProps.Id);
                 }
             }
-            foreach (var currentFaceConvering in conflictingFaceCoverings)
+            foreach (var currentFaceConvering in maskUtil.conflictingFaceCoverings)
             {
                 if (tables.Templates.Items.TryGetValue(maskProps.Id, out var currentMask))
                 {
@@ -139,7 +93,7 @@ public class WolfiksHeavyTroopers(
         {
             if (masks.Items.TryGetValue(maskConfigName, out var maskProps))
             {
-                foreach (var map in maps)
+                foreach (var map in maskUtil.maps)
                 {
                     string mapName = tables.Locations.GetMappedKey(map);
                     var location = tables.Locations.GetDictionary()[mapName];
@@ -148,7 +102,7 @@ public class WolfiksHeavyTroopers(
 
                     foreach (var (lootContainerString, probability) in staticLooProbabilities)
                     {
-                        var lootContainer = lootContainerMap[lootContainerString];
+                        var lootContainer = maskUtil.lootContainerMap[lootContainerString];
                         try
                         {
                             var newProbability = new ItemDistribution
@@ -174,13 +128,13 @@ public class WolfiksHeavyTroopers(
                         }
                         catch
                         {
-                            logger.Error($"[Wolfiks Heavy Troopers] Could not add {maskConfigName} to container {lootContainerString} on map {map}");
+                            logger.Debug($"[Wolfiks Heavy Troopers] Could not add {maskConfigName} to container {lootContainerString} on map {map}");
                         }
                     }
                 }
             }
         }
-        logger.Success("Wolfiks Heavy Troopers successfully add to server!");
+        logger.Success("[Wolfiks Heavy Troopers] Successfully added to server!");
         return Task.CompletedTask;
     }
 

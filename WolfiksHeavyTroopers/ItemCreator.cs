@@ -23,6 +23,8 @@ class ItemCreator
     {
         foreach (var (name, props) in config.Config)
         {
+            if (!props.enable) continue;
+
             var newItem = new NewItemFromCloneDetails
             {
                 ItemTplToClone = "5ea058e01dbce517f324b3e2",

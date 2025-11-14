@@ -56,6 +56,7 @@ public class WolfiksHeavyTroopers(
         var configPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(pathToMod, "config"));
         var itemPropsPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(pathToMod, "locales"));
         var modConfig = modHelper.GetJsonDataFromFile<ModConfig>(configPath, "config.jsonc");
+        var ragfairConfig = configServer.GetConfig<RagfairConfig>();
         var masks = modHelper.GetJsonDataFromFile<Masks>(itemPropsPath, "en.json");
         var tables = db.GetTables();
         var ItemCreator = new ItemCreator(logger, modConfig, masks);
@@ -91,6 +92,12 @@ public class WolfiksHeavyTroopers(
 
         foreach (var (maskConfigName, maskConfigProps) in modConfig.Config)
         {
+            // flea ban masks
+            if (maskConfigProps.flea_banned)
+            {
+                ragfairConfig.Dynamic.Blacklist.Custom.Add(masks.Items[maskConfigName].Id);
+            }
+            // Static Loot Injection
             if (masks.Items.TryGetValue(maskConfigName, out var maskProps))
             {
                 foreach (var map in maskUtil.maps)

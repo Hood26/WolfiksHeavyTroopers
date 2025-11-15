@@ -27,7 +27,7 @@ public record ModMetadata : AbstractModMetadata
     public override string Author { get; init; } = "Hood";
     public override List<string>? Contributors { get; init; }
     public override SemanticVersioning.Version Version { get; init; } = new("1.1.0");
-    public override SemanticVersioning.Range SptVersion { get; init; } = new("~4.0.3");
+    public override SemanticVersioning.Range SptVersion { get; init; } = new("~4.0.0");
 
 
     public override List<string>? Incompatibilities { get; init; }
@@ -71,6 +71,7 @@ public class WolfiksHeavyTroopers(
 
         foreach (var (maskName, maskProps) in masks.Items)
         {
+            if (!modConfig.Config[maskName].enable) continue;
             if (tables?.Templates?.Items == null) continue;
 
             // Add masks to every helmet filter
@@ -92,6 +93,8 @@ public class WolfiksHeavyTroopers(
 
         foreach (var (maskConfigName, maskConfigProps) in modConfig.Config)
         {
+            if (!maskConfigProps.enable) continue;
+            
             // flea ban masks
             if (maskConfigProps.flea_banned)
             {

@@ -27,12 +27,13 @@ class BotHelper
 
     public void addCultistMaskToCultistLoadout()
     {
+        if (!modConfig.Config["Cultist_Mask"].enable) return;
         var tables = db.GetTables();
 
         if (tables.Bots.Types.TryGetValue("sectantwarrior", out var cultist))
         {
-            // 10% chance to spawn with helmet - the chance face covering stops it??
-            cultist.BotChances.EquipmentChances["Headwear"] = 10;
+            // 15% chance to spawn with helmet - the chance face covering stops it?? 15% *.65 = 9.75 aprox
+            cultist.BotChances.EquipmentChances["Headwear"] = 15;
             // Always spawns with a mask
             // Might present a compatibility issue in the future. maybe. idk.
             cultist.BotChances.EquipmentModsChances["mod_nvg"] = 100; // Mask is considered an nvg for some reason 

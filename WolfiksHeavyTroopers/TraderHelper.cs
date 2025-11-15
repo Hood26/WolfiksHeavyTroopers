@@ -30,6 +30,8 @@ class TraderHelper
 
         foreach (var (name, props) in modConfig.Config)
         {
+            if(!props.enable) continue;
+            
             if (props.sold_by_trader)
             {
                 assortCreator.CreateSingleAssortItem(masks.Items[name].Id, masks.Items[name].ItemAssortId)
@@ -50,6 +52,7 @@ class TraderHelper
 
         foreach (var (maskName, maskProps) in masks.Items)
         {
+            if (!modConfig.Config[maskName].enable) continue;
             if (!modConfig.Config[maskName].quest_required) continue;
 
             // Add masks to Peacekeeper QuestAssort

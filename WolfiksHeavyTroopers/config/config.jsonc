@@ -18,7 +18,7 @@
       // Price of the mask in Dollars sold by Peacekeeper
       "trader_price": 1200,
       // Price in Roubles for the average selling price on the flea-market
-      "flea_price": 250000,
+      "flea_price": 260000,
       // The Quick Sell price of the mask when sold to a trader (Kinda)
       "handbook_price": 150000,
       // How many masks that can be bought from trader during refresh period
@@ -58,7 +58,7 @@
       "quest_required": false,
       "flea_banned": false,
       "trader_price": 2000,
-      "flea_price": 375000,
+      "flea_price": 380000,
       "handbook_price": 250000,
       "trader_stock": 2,
       "loyalty_level": 4,
@@ -66,7 +66,7 @@
       "durability": 50,
       "max_durability": 50,
       "static_loot_container_probabilities": {
-        "weapon_box_5x5": 15,
+        "weapon_box_5x5": 20,
         "weapon_box_4x4": 35,
         "weapon_box_6x3": 35,
         "weapon_box_5x2": 35,
@@ -83,7 +83,7 @@
       "quest_required": false,
       "flea_banned": false,
       "trader_price": 2000,
-      "flea_price": 375000,
+      "flea_price": 380000,
       "handbook_price": 250000,
       "trader_stock": 2,
       "loyalty_level": 4,
@@ -91,7 +91,7 @@
       "durability": 50,
       "max_durability": 50,
       "static_loot_container_probabilities": {
-        "weapon_box_5x5": 15,
+        "weapon_box_5x5": 20,
         "weapon_box_4x4": 35,
         "weapon_box_6x3": 35,
         "weapon_box_5x2": 35,
@@ -105,31 +105,31 @@
       "enable": true,
       "sold_by_trader": true,
       "quest_required": true, // Peacekeeper "Wet Job - Part 5" Quest
-      "flea_banned": false,
+      "flea_banned": true,
       "trader_price": 3000,
-      "flea_price": 525000,
-      "handbook_price": 300000,
+      "flea_price": 550000,
+      "handbook_price": 350000,
       "trader_stock": 2,
       "loyalty_level": 4,
       "armor_class_level": 5,
       "durability": 60,
       "max_durability": 60,
       "static_loot_container_probabilities": {
-        "weapon_box_5x5": 5,
-        "weapon_box_4x4": 15,
-        "weapon_box_6x3": 15,
-        "weapon_box_5x2": 15,
-        "ground_cache_4x4": 10,
-        "wooden_crate_5x2": 10,
-        "duffle_bag_4x3": 15,
-        "dead_scav_4x4": 15
+        "weapon_box_5x5": 10,
+        "weapon_box_4x4": 25,
+        "weapon_box_6x3": 25,
+        "weapon_box_5x2": 25,
+        "ground_cache_4x4": 15,
+        "wooden_crate_5x2": 15,
+        "duffle_bag_4x3": 20,
+        "dead_scav_4x4": 20
       }
     },
     "Cultist_Mask": {
       "enable": true,
       "sold_by_trader": true,
       "quest_required": true, // Peacekeeper "The Guide" Quest
-      "flea_banned": false,
+      "flea_banned": true,
       "trader_price": 3500,
       "flea_price": 666666,
       "handbook_price": 400000,

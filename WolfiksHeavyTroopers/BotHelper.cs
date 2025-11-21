@@ -39,7 +39,7 @@ class BotHelper
             cultist.BotChances.EquipmentModsChances["mod_nvg"] = 100; // Mask is considered an nvg for some reason 
 
             var headwearInventory = cultist.BotInventory.Equipment[EquipmentSlots.Headwear];
-            headwearInventory.Add("5a154d5cfcdbcb001a3b00da", 999999); // FAST MT Black Helmet
+            headwearInventory.Add("5a154d5cfcdbcb001a3b00da", 3000); // FAST MT Black Helmet
 
             var mods = cultist.BotInventory.Mods;
 

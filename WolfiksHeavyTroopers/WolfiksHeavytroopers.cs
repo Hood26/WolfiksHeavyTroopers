@@ -6,19 +6,9 @@ using SPTarkov.Server.Core.Models.Spt.Mod;
 using SPTarkov.Server.Core.Models.Utils;
 using SPTarkov.Server.Core.Servers;
 using SPTarkov.Server.Core.Services;
-using SPTarkov.Server.Core.Utils;
 using SPTarkov.Server.Core.Services.Mod;
 using SPTarkov.Server.Core.Models.Spt.Config;
-using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Eft.Common;
-using SPTarkov.Server.Core.Models.Common;
-using JetBrains.Annotations;
-using System.Text.Json;
-using System.Text.Encodings.Web;
-using System.Text.Unicode;
-using System.Runtime.InteropServices;
-using SPTarkov.Server.Core.Models.Eft.Inventory;
-
 namespace WolfiksHeavyTroopers;
 
 public record ModMetadata : AbstractModMetadata
@@ -26,7 +16,7 @@ public record ModMetadata : AbstractModMetadata
     public override string Name { get; init; } = "Wolfiks Heavy Troopers";
     public override string Author { get; init; } = "Hood";
     public override List<string>? Contributors { get; init; }
-    public override SemanticVersioning.Version Version { get; init; } = new("1.1.0");
+    public override SemanticVersioning.Version Version { get; init; } = new("1.1.1");
     public override SemanticVersioning.Range SptVersion { get; init; } = new("~4.0.0");
 
 
@@ -38,7 +28,7 @@ public record ModMetadata : AbstractModMetadata
     public override string ModGuid { get; init; } = "com.hood.wolfiksheavytroopers";
 }
 
-[Injectable(TypePriority = OnLoadOrder.PostDBModLoader + 1)]
+[Injectable(TypePriority = OnLoadOrder.PostDBModLoader + 10)]
 public class WolfiksHeavyTroopers(
     ISptLogger<WolfiksHeavyTroopers> logger,
     ConfigServer configServer,
@@ -75,7 +65,7 @@ public class WolfiksHeavyTroopers(
             if (tables?.Templates?.Items == null) continue;
 
             // Add masks to every helmet filter
-            foreach (var helmet in maskUtil.defaultHelmets)
+            foreach (var helmet in maskUtil.helmets)
             {
                 if (tables.Templates.Items.TryGetValue(helmet, out var currentHelmet))
                 {
@@ -89,17 +79,26 @@ public class WolfiksHeavyTroopers(
                     currentMask.Properties?.ConflictingItems?.Remove(currentFaceConvering);
                 }
             }
+
+            foreach (var helmet in maskUtil.artemHelmets)
+            {
+                if (tables.Templates.Items.TryGetValue(helmet, out var currentHelmet))
+                {
+                    currentHelmet.Properties?.Slots?.ElementAt(0).Properties?.Filters?.ElementAt(0).Filter?.Add(maskProps.Id);
+                }
+            }
         }
 
         foreach (var (maskConfigName, maskConfigProps) in modConfig.Config)
         {
             if (!maskConfigProps.enable) continue;
-            
+
             // flea ban masks
             if (maskConfigProps.flea_banned)
             {
                 ragfairConfig.Dynamic.Blacklist.Custom.Add(masks.Items[maskConfigName].Id);
             }
+
             // Static Loot Injection
             if (masks.Items.TryGetValue(maskConfigName, out var maskProps))
             {

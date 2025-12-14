@@ -7,7 +7,8 @@
       "QuestAssortId": "69145ae60a0bb78a4a05fb6d",
       "Name": "COYOTE Heavy Trooper Mask",
       "ShortName": "CYTHTP",
-      "Description": "Coyote ballistic faceshield by KMCompany made for Team Wendy EXFIL helmets."
+      "Description": "Coyote ballistic faceshield by KMCompany made for Team Wendy EXFIL helmets.",
+      "RU_Description": "Койотовая баллистическая маска, сделанна компанией KMCompany для шлемов Team Wendy EXFIL."
     },
     "Tan_Mask": {
       "Id": "690be27992b93c91540ad4e0",
@@ -16,7 +17,8 @@
       "QuestAssortId": "69145ae60a0bb78a4a05fb6e",
       "Name": "TAN Heavy Trooper Mask",
       "ShortName": "TNHTP",
-      "Description": "Tan ballistic faceshield made by KMCompany for Ops-Core helmets."
+      "Description": "Tan ballistic faceshield made by KMCompany for Ops-Core helmets.",
+      "RU_Description": "Желтая баллистическая маска, сделанна компанией KMCompany для шлемов Ops-Core."
     },
     "Black_Mask": {
       "Id": "690be27992b93c91540ad4e1",
@@ -25,7 +27,8 @@
       "QuestAssortId": "69145ae60a0bb78a4a05fb6f",
       "Name": "BLACK Heavy Trooper Mask",
       "ShortName": "BLKHTP",
-      "Description": "Black ballistic faceshield made by KMCompany for Ops-Core helmets."
+      "Description": "Black ballistic faceshield made by KMCompany for Ops-Core helmets.",
+      "RU_Description": "Черная баллистическая маска, сделанна компанией KMCompany для шлемов Ops-Core."
     },
     "Wolf_Mask": {
       "Id": "690be27992b93c91540ad4e2",
@@ -34,7 +37,8 @@
       "QuestAssortId": "69145ae60a0bb78a4a05fb70",
       "Name": "WOLF Heavy Trooper Mask",
       "ShortName": "WLFHTP",
-      "Description": "A faceshield, probably selfmade out of ballisitc heavy trooper mask."
+      "Description": "A faceshield, probably selfmade out of ballisitc heavy trooper mask.",
+      "RU_Description": "Селф мейд забрало созданное из баллистической маски Heavy Trooper."
     },
     "Cultist_Mask": {
       "Id": "690be27992b93c91540ad4e3",
@@ -43,7 +47,8 @@
       "QuestAssortId": "69145ae60a0bb78a4a05fb71",
       "Name": "CULTIST Heavy Trooper Mask",
       "ShortName": "CULTHTP",
-      "Description": "Some kind of weird decorated ballistic mask."
+      "Description": "Some kind of weird decorated ballistic mask.",
+      "RU_Description": "Странно задекорированная баллистическая маска."
     }
   }
 }

@@ -41,11 +41,6 @@ class MaskUtil(
         "6883724d0c10f100000000b8", // Ops-Core FAST MT Super High Cut helmet (Multicam Tropic)
     ];
 
-    public readonly string[] tcgHelmets = [
-        // Tactical Gear Component / Painter
-        "672e2e75b14ae1b5c91474b4"  // Ops-Core FAST MT MODXII (M90)
-    ];
-
     public readonly string[] artemHelmets = 
     [
         "66326bfd46817c660d015126", // Ops-Core FAST Carbon High Cut Helmet (Dark Blue)

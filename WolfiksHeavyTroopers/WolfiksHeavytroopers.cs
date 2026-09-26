@@ -39,7 +39,6 @@ public class WolfiksHeavyTroopers(
     )
     : IOnLoad
 {
-
     public Task OnLoad()
     {
         var pathToMod = modHelper.GetAbsolutePathToModFolder(Assembly.GetExecutingAssembly());
@@ -71,13 +70,6 @@ public class WolfiksHeavyTroopers(
                 if (tables.Templates.Items.TryGetValue(helmet, out var currentHelmet))
                 {
                     currentHelmet.Properties?.Slots?.ElementAt(1).Properties?.Filters?.ElementAt(0).Filter?.Add(maskProps.Id);
-                }
-            }
-            foreach (var helmet in maskUtil.tcgHelmets)
-            {
-                if (tables.Templates.Items.TryGetValue(helmet, out var currentHelmet))
-                {
-                    currentHelmet.Properties?.Slots?.ElementAt(3).Properties?.Filters?.ElementAt(0).Filter?.Add(maskProps.Id);
                 }
             }
             foreach (var helmet in maskUtil.artemHelmets)

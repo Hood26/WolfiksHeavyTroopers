@@ -1,27 +1,16 @@
-using SPTarkov.Server.Core.Helpers;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Spt.Mod;
-using SPTarkov.Server.Core.Models.Utils;
-using SPTarkov.Server.Core.Servers;
 using SPTarkov.Server.Core.Services.Mod;
 
 namespace WolfiksHeavyTroopers;
 
-class ItemCreator
+class ItemCreator(MaskUtil maskUtil)
 {
-    private readonly ISptLogger<WolfiksHeavyTroopers> logger;
-    private readonly ModConfig config;
-    private readonly Masks masks;
-    public ItemCreator(ISptLogger<WolfiksHeavyTroopers> logger, ModConfig config, Masks masks)
-    {
-        this.logger = logger;
-        this.config = config;
-        this.masks = masks;
-    }
+    private readonly MaskUtil maskUtil = maskUtil;
 
     public void BuildItems(CustomItemService customItemService)
     {
-        foreach (var (name, props) in config.Config)
+        foreach (var (name, props) in maskUtil.config.Items)
         {
             if (!props.enable) continue;
 
@@ -40,7 +29,7 @@ class ItemCreator
                     },
                 },
                 ParentId = "57bef4c42459772e8d35a53b",
-                NewId = masks.Items[name].Id,
+                NewId = maskUtil.masks.Items[name].Id,
                 FleaPriceRoubles = props.flea_price,
                 HandbookPriceRoubles = props.handbook_price,
                 HandbookParentId = "5b5f704686f77447ec5d76d7",
@@ -50,10 +39,28 @@ class ItemCreator
                         "en",
                         new LocaleDetails
                         {
-                            Name = masks.Items[name].Name,
-                            ShortName = masks.Items[name].ShortName,
-                            Description = masks.Items[name].Description,
+                            Name = maskUtil.locales.Items["en"][name].Name,
+                            ShortName = maskUtil.locales.Items["en"][name].ShortName,
+                            Description = maskUtil.locales.Items["en"][name].Description,
                         }
+                    },
+                    {
+                       "ru",
+                        new LocaleDetails
+                        {
+                            Name = maskUtil.locales.Items["ru"][name].Name,
+                            ShortName = maskUtil.locales.Items["ru"][name].ShortName,
+                            Description = maskUtil.locales.Items["ru"][name].Description,
+                        } 
+                    },
+                    {
+                       "ch",
+                        new LocaleDetails
+                        {
+                            Name = maskUtil.locales.Items["ch"][name].Name,
+                            ShortName = maskUtil.locales.Items["ch"][name].ShortName,
+                            Description = maskUtil.locales.Items["ch"][name].Description,
+                        } 
                     }
                 }
 

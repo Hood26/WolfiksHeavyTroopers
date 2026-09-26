@@ -1,34 +1,16 @@
-using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Enums;
-using SPTarkov.Server.Core.Models.Utils;
-using SPTarkov.Server.Core.Servers;
-using SPTarkov.Server.Core.Services;
 using SPTarkov.Server.Core.Models.Common;
-using System.ComponentModel;
 
 namespace WolfiksHeavyTroopers;
 
-class BotHelper
+class BotHelper(MaskUtil maskUtil)
 {
-    private readonly DatabaseServer db;
-    private readonly DatabaseService databaseService;
-    private readonly ISptLogger<WolfiksHeavyTroopers> logger;
-    private readonly ModConfig modConfig;
-    private readonly Masks masks;
-
-    public BotHelper(DatabaseServer db, DatabaseService databaseService, ISptLogger<WolfiksHeavyTroopers> logger, ModConfig modConfig, Masks masks)
-    {
-        this.db = db;
-        this.databaseService = databaseService;
-        this.logger = logger;
-        this.modConfig = modConfig;
-        this.masks = masks;
-    }
+    private readonly MaskUtil maskUtil = maskUtil;
 
     public void addCultistMaskToCultistLoadout()
     {
-        if (!modConfig.Config["Cultist_Mask"].enable) return;
-        var tables = db.GetTables();
+        if (!maskUtil.config.Items["Cultist_Mask"].enable) return;
+        var tables = maskUtil.db.GetTables();
 
         if (tables.Bots.Types.TryGetValue("sectantwarrior", out var cultist))
         {

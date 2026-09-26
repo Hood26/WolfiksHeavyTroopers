@@ -1,17 +1,16 @@
-using System.Runtime.InteropServices;
-using SPTarkov.Server.Core.Models.Common;
-
 namespace WolfiksHeavyTroopers;
 
 public class ModConfig
 {
-    public required Dictionary<string, ItemProps> Config { get; set; }
+    public required Dictionary<string, ItemProps> Items { get; set; }
 }
 
 public class ItemProps
 {
     public bool enable { get; set; }
     public bool sold_by_trader { get; set; }
+    public required string trader { get; set; }
+    public required string trader_currency_type { get; set; }
     public bool quest_required { get; set; }
     public bool flea_banned { get; set; }
     public int trader_price { get; set; }

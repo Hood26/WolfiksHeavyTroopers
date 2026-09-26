@@ -1,0 +1,85 @@
+{
+  "Items": {
+    "en": {
+      "Coyote_Mask": {
+        "Name": "COYOTE Heavy Trooper Mask",
+        "ShortName": "CYTHTP",
+        "Description": "Coyote ballistic faceshield by KMCompany made for Team Wendy EXFIL helmets."
+      },
+      "Tan_Mask": {
+        "Name": "TAN Heavy Trooper Mask",
+        "ShortName": "TNHTP",
+        "Description": "Tan ballistic faceshield made by KMCompany for Ops-Core helmets."
+      },
+      "Black_Mask": {
+        "Name": "BLACK Heavy Trooper Mask",
+        "ShortName": "BLKHTP",
+        "Description": "Black ballistic faceshield made by KMCompany for Ops-Core helmets."
+      },
+      "Wolf_Mask": {
+        "Name": "WOLF Heavy Trooper Mask",
+        "ShortName": "WLFHTP",
+        "Description": "A wolf like faceshield, probably selfmade out of ballistics"
+      },
+      "Cultist_Mask": {
+        "Name": "CULTIST Heavy Trooper Mask",
+        "ShortName": "CULTHTP",
+        "Description": "A handcrafted mask that cultists tend to wear."
+      }
+    },
+    "ru": {
+      "Coyote_Mask": {
+        "Name": "COYOTE Heavy Trooper Mask",
+        "ShortName": "CYTHTP",
+        "Description": "Койотовая баллистическая маска, сделанна компанией KMCompany для шлемов Team Wendy EXFIL."
+      },
+      "Tan_Mask": {
+        "Name": "TAN Heavy Trooper Mask",
+        "ShortName": "TNHTP",
+        "Description": "Желтая баллистическая маска, сделанна компанией KMCompany для шлемов Ops-Core."
+      },
+      "Black_Mask": {
+        "Name": "BLACK Heavy Trooper Mask",
+        "ShortName": "BLKHTP",
+        "Description": "Черная баллистическая маска, сделанна компанией KMCompany для шлемов Ops-Core."
+      },
+      "Wolf_Mask": {
+        "Name": "WOLF Heavy Trooper Mask",
+        "ShortName": "WLFHTP",
+        "Description": "Селф мейд забрало созданное из баллистической маски Heavy Trooper."
+      },
+      "Cultist_Mask": {
+        "Name": "CULTIST Heavy Trooper Mask",
+        "ShortName": "CULTHTP",
+        "Description": "Странно задекорированная баллистическая маска."
+      }
+    },
+    "ch": {
+      "Coyote_Mask": {
+        "Name": "COYOTE Heavy Trooper Mask",
+        "ShortName": "CYTHTP",
+        "Description": "Coyote防弹面罩由KMCompany为Team Wendy EXFIL头盔制造"
+      },
+      "Tan_Mask": {
+        "Name": "TAN Heavy Trooper Mask",
+        "ShortName": "TNHTP",
+        "Description": "由 KMCompany 制造、适用于 Ops-Core 头盔的沙色防弹面罩"
+      },
+      "Black_Mask": {
+        "Name": "BLACK Heavy Trooper Mask",
+        "ShortName": "BLKHTP",
+        "Description": "由 KMCompany 制造、适配 Ops-Core 头盔的黑色防弹面罩"
+      },
+      "Wolf_Mask": {
+        "Name": "WOLF Heavy Trooper Mask",
+        "ShortName": "WLFHTP",
+        "Description": "一个狼脸造型的面罩，很可能是用防弹材料自制的"
+      },
+      "Cultist_Mask": {
+        "Name": "CULTIST Heavy Trooper Mask",
+        "ShortName": "CULTHTP",
+        "Description": "一顶邪教徒们钟爱佩戴的手工面具"
+      }
+    }
+  }
+}

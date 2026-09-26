@@ -10,7 +10,7 @@
     <!-- The two lines below will set the output path for the binaries -->
     <OutputPath>bin\$(Configuration)\$(ProjectName)\$(AssemblyName)\</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <ServerModDir Condition = " $(ServerModDir) == '' ">C:\SPT 4.0.4\SPT\user\mods\WolfiksHeavyTroopers</ServerModDir>
+    <ServerModDir Condition = " $(ServerModDir) == '' ">Z:\SPT 4.0.11 WolfikHeavyTrooper\SPT\user\mods\WolfiksHeavyTroopers</ServerModDir>
   </PropertyGroup>
   <Target Name="CopyToServer" AfterTargets="PostBuildEvent">
 
@@ -34,9 +34,9 @@
         
     </Target>
   <ItemGroup>
-    <PackageReference Include="SPTarkov.Common" Version="4.0.3" />
-    <PackageReference Include="SPTarkov.DI" Version="4.0.3" />
-    <PackageReference Include="SPTarkov.Server.Core" Version="4.0.3" />
+    <PackageReference Include="SPTarkov.Common" Version="4.0.0" />
+    <PackageReference Include="SPTarkov.DI" Version="4.0.0" />
+    <PackageReference Include="SPTarkov.Server.Core" Version="4.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bundles\**">

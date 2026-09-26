@@ -1,68 +1,72 @@
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Enums;
-using SPTarkov.Server.Core.Models.Utils;
-using SPTarkov.Server.Core.Servers;
-using SPTarkov.Server.Core.Services;
 using SPTarkov.Server.Core.Models.Common;
 
 namespace WolfiksHeavyTroopers;
 
-class TraderHelper
+class TraderHelper(MaskUtil maskUtil)
 {
-    private readonly DatabaseServer db;
-    private readonly DatabaseService databaseService;
-    private readonly ISptLogger<WolfiksHeavyTroopers> logger;
-    private readonly ModConfig modConfig;
-    private readonly Masks masks;
+    private readonly MaskUtil maskUtil = maskUtil;
 
-    public TraderHelper(DatabaseServer db, DatabaseService databaseService, ISptLogger<WolfiksHeavyTroopers> logger, ModConfig modConfig, Masks masks)
+    public void addMasksToTrader()
     {
-        this.db = db;
-        this.databaseService = databaseService;
-        this.logger = logger;
-        this.modConfig = modConfig;
-        this.masks = masks;
-    }
-    public void addMasksToTrader(
-        string traderId)
-    {
-        var assortCreator = new FluentTraderAssortCreator(databaseService, logger);
+        var assortCreator = new FluentTraderAssortCreator(maskUtil.ds, maskUtil.logger);
 
-        foreach (var (name, props) in modConfig.Config)
+        foreach (var (name, props) in maskUtil.config.Items)
         {
             if(!props.enable) continue;
             
             if (props.sold_by_trader)
             {
-                assortCreator.CreateSingleAssortItem(masks.Items[name].Id, masks.Items[name].ItemAssortId)
+                MongoId traderId = maskUtil.traderMap[maskUtil.config.Items[name].trader];
+                var currencyType = getCurrencyType(maskUtil.config.Items[name].trader_currency_type);
+                assortCreator.CreateSingleAssortItem(maskUtil.masks.Items[name].Id, maskUtil.masks.Items[name].ItemAssortId)
                     .AddUnlimitedStackCount()
                     .AddBuyRestriction(props.trader_stock)
-                    .AddMoneyCost(Money.DOLLARS, props.trader_price)
+                    .AddMoneyCost(currencyType, props.trader_price)
                     .AddLoyaltyLevel(props.loyalty_level)
                     .Export(traderId);
             }
         }
     }
 
+    public MongoId getCurrencyType(string currencyType)
+    {
+        Dictionary<string, MongoId> currencyTypes = new()
+        {
+            {"roubles", Money.ROUBLES},
+            {"dollars", Money.DOLLARS},
+            {"euros", Money.EUROS}
+        };
+
+        if (currencyTypes.TryGetValue(currencyType, out var result))
+        {
+            return result;
+        }
+
+        return Money.ROUBLES;
+    }
+
     public void addMasksToQuests()
     {
-        var tables = db.GetTables();
+        var tables = maskUtil.db.GetTables();
         var quests = tables.Templates.Quests;
-        MongoId peacekeeper = "5935c25fb3acc3127c3d8cd9";
+        //MongoId peacekeeper = "5935c25fb3acc3127c3d8cd9";
 
-        foreach (var (maskName, maskProps) in masks.Items)
+        foreach (var (maskName, maskProps) in maskUtil.masks.Items)
         {
-            if (!modConfig.Config[maskName].enable) continue;
-            if (!modConfig.Config[maskName].quest_required) continue;
+            if (!maskUtil.config.Items[maskName].enable) continue;
+            if (!maskUtil.config.Items[maskName].quest_required) continue;
 
+            MongoId traderId = maskUtil.traderMap[maskUtil.config.Items[maskName].trader];
             // Add masks to Peacekeeper QuestAssort
-            if (tables.Traders.TryGetValue(peacekeeper, out var trader)) {
+            if (tables.Traders.TryGetValue(traderId, out var trader)) {
                 //logger.Success($"Adding {maskName} to Peacekeeper QuestAssort");
-                trader.QuestAssort["success"].Add(masks.Items[maskName].ItemAssortId, masks.Items[maskName].QuestId);
+                trader.QuestAssort["success"].Add(maskUtil.masks.Items[maskName].ItemAssortId, maskUtil.masks.Items[maskName].QuestId);
             }
 
             // Add mask to quest reward
-            if (quests.TryGetValue(masks.Items[maskName].QuestId, out var quest) && quest is not null)
+            if (quests.TryGetValue(maskUtil.masks.Items[maskName].QuestId, out var quest) && quest is not null)
             {
                 //logger.Success($"Creating {maskName} Reward");
                 var reward = new Reward
@@ -82,7 +86,7 @@ class TraderHelper
                     ],
                     LoyaltyLevel = 4,
                     Target = maskProps.ItemAssortId,
-                    TraderId = peacekeeper,
+                    TraderId = traderId,
                     Type = RewardType.AssortmentUnlock,
                     Unknown = false
                 };

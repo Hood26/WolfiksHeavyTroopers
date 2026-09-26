@@ -1,54 +1,68 @@
+using SPTarkov.Server.Core.Models.Utils;
+using SPTarkov.Server.Core.Servers;
+using SPTarkov.Server.Core.Services;
+
 namespace WolfiksHeavyTroopers;
 
-class MaskUtil
+class MaskUtil(
+    DatabaseServer db,
+    DatabaseService ds,
+    ISptLogger<WolfiksHeavyTroopers> logger,
+    ModConfig config,
+    Masks masks,
+    Locales locales
+    )
 {
+
+    public readonly DatabaseServer db = db;
+    public readonly DatabaseService ds = ds;
+    public readonly ISptLogger<WolfiksHeavyTroopers> logger = logger;
+    public readonly ModConfig config = config;
+    public readonly Masks masks = masks;
+    public readonly Locales locales = locales;
     public readonly string[] helmets =
     [
         // Defaults
-        "5a154d5cfcdbcb001a3b00da",
-        "5ac8d6885acfc400180ae7b0",
-        "5b432d215acfc4771e1c6624",
-        "5ea05cf85ad9772e6624305d",
-        "5e01ef6886f77445f643baa4",
-        "5e00c1ad86f774747333222c",
+        "5a154d5cfcdbcb001a3b00da", // Ops-Core FAST MT Super High Cut helmet (Black)
+        "5ac8d6885acfc400180ae7b0", // Ops-Core FAST MT Super High Cut helmet (Urban Tan)
+        "5b432d215acfc4771e1c6624", // LShZ lightweight helmet (Olive Drab)
+        "5ea05cf85ad9772e6624305d", // Tac-Kek FAST MT helmet (Replica)
+        "5e01ef6886f77445f643baa4", // Team Wendy EXFIL Ballistic Helmet (Coyote Brown)
+        "5e00c1ad86f774747333222c", // Team Wendy EXFIL Ballistic Helmet (Black)
         // Couturier
-        "68af53260c10f1000000018c",
-        "68af53260c10f10000000191",
-        "68af53260c10f1000000019b",
-        "68af53260c10f100000001a0",
-        "68835fc00c10f100000000b0",
-        "68835fc00c10f100000000b5",
-        "68835fc00c10f100000000ba",
-        "68835fc00c10f100000000bf",
-        "6883724d0c10f100000000b8",
+        "68af53260c10f1000000018c", // LShZ lightweight helmet (Dusk)
+        "68af53260c10f10000000191", // LShZ lightweight helmet (EMR Summer)
+        "68af53260c10f1000000019b", // LShZ lightweight helmet (Yagel)
+        "68af53260c10f100000001a0", // LShZ lightweight helmet (SURPAT)
+        "68835fc00c10f100000000b0", // Ops-Core FAST MT Super High Cut helmet (MM14)
+        "68835fc00c10f100000000b5", // Ops-Core FAST MT Super High Cut helmet (Multicam)
+        "68835fc00c10f100000000ba", // Ops-Core FAST MT Super High Cut helmet (A-TACS FG)
+        "68835fc00c10f100000000bf", // Ops-Core FAST MT Super High Cut helmet (UCP)
+        "6883724d0c10f100000000b8", // Ops-Core FAST MT Super High Cut helmet (Multicam Tropic)
+    ];
+
+    public readonly string[] tcgHelmets = [
+        // Tactical Gear Component / Painter
+        "672e2e75b14ae1b5c91474b4"  // Ops-Core FAST MT MODXII (M90)
     ];
 
     public readonly string[] artemHelmets = 
     [
-        "66326bfd46817c660d015125", // DLP Tactical Extreme Helmet
         "66326bfd46817c660d015126", // Ops-Core FAST Carbon High Cut Helmet (Dark Blue)
-        "66326bfd46817c660d015127", // Legacy Safety Special Ops Ballistic Helmet FAST
         "66326bfd46817c660d015128", // Ops-Core FAST Carbon High Cut Helmet
-        "66326bfd46817c660d015129", // DLP Tactical Extreme Helmet
-        "66326bfd46817c660d01512d", // Tactical Bump Helmet (Black)
-        "6673b1ac5cae0610f1079d7e", // Tactical Bump Helmet (Alpine)
-        "669819683571cb050b0b6393", // ACH High Cut Tactical Helmet (Alpine)
-        "669819683571cb050b0b6394", // ACH High Cut Tactical Helmet (Black)
         "66bf757f27d0b097db0ace44", // Ops-Core SF High Cut Helmet (Multicam)
         "66bf757f27d0b097db0ace58", // Ops-Core SF High Cut Helmet (OD)
         "66bf757f27d0b097db0ace61", // Ops-Core SF High Cut Helmet (Black)
-        "676a1476242dea0ba69ebbd8", // Ops-Core SF Warrior Helmet (Black)
-        "66326bfd46817c660d01512a", // Ops-Core FAST Carbon High Cut Helmet (Tan)
     ];
 
     public readonly string[] conflictingFaceCoverings =
     [
-        "5e71f6be86f77429f2683c44",
-        "5b4325355acfc40019478126",
-        "5e54f76986f7740366043752",
-        "5e71fad086f77422443d4604",
-        "572b7fa524597762b747ce82",
-        "5ab8f85d86f7745cd93a1cf5",
+        "5e71f6be86f77429f2683c44", // Twitch Rivals 2020 mask
+        "5b4325355acfc40019478126", // Shemagh (Tan)
+        "5e54f76986f7740366043752", // Shroud half-mask
+        "5e71fad086f77422443d4604", // Twitch Rivals 2020 half-mask
+        "572b7fa524597762b747ce82", // Lower half-mask
+        "5ab8f85d86f7745cd93a1cf5", // Shemagh (Green)
     ];
 
     public readonly string[] maps =
@@ -66,6 +80,17 @@ class MaskUtil
         "sandbox",     // groundzero
         "sandbox_high" // groundzero_lvl_20+
     ];
+
+    public readonly Dictionary<string, string> traderMap = new()
+    {
+        {"peacekeeper", "5935c25fb3acc3127c3d8cd9"},
+        {"skier", "58330581ace78e27b8b10cee"},
+        {"mechanic", "5a7c2eca46aef81a7ca2145d"},
+        {"ragman", "5ac3b934156ae10c4430e83c"},
+        {"jaeger", "5c0647fdd443bc2504c2d371"},
+        {"prapor", "54cb50c76803fa8b248b4571"},
+        {"therapist", "54cb57776803fa99248b456e"}
+    };
 
     public readonly Dictionary<string, string> lootContainerMap = new()
     {

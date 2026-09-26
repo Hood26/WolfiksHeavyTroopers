@@ -1,0 +1,39 @@
+{
+  "Items": {
+    "Coyote_Mask": {
+      "Id": "690be27992b93c91540ad4df",
+      "TraderId": "5935c25fb3acc3127c3d8cd9",
+      "QuestId": "",
+      "ItemAssortId": "691462570a0bb78a4a05fb7a",
+      "QuestAssortId": "69145ae60a0bb78a4a05fb6d"
+    },
+    "Tan_Mask": {
+      "Id": "690be27992b93c91540ad4e0",
+      "TraderId": "5935c25fb3acc3127c3d8cd9",
+      "QuestId": "",
+      "ItemAssortId": "691462570a0bb78a4a05fb7b",
+      "QuestAssortId": "69145ae60a0bb78a4a05fb6e"
+    },
+    "Black_Mask": {
+      "Id": "690be27992b93c91540ad4e1",
+      "TraderId": "5935c25fb3acc3127c3d8cd9",
+      "QuestId": "",
+      "ItemAssortId": "691462570a0bb78a4a05fb7c",
+      "QuestAssortId": "69145ae60a0bb78a4a05fb6f"
+    },
+    "Wolf_Mask": {
+      "Id": "690be27992b93c91540ad4e2",
+      "TraderId": "5935c25fb3acc3127c3d8cd9",
+      "QuestId": "5c0d4e61d09282029f53920e",
+      "ItemAssortId": "691462570a0bb78a4a05fb7d",
+      "QuestAssortId": "69145ae60a0bb78a4a05fb70"
+    },
+    "Cultist_Mask": {
+      "Id": "690be27992b93c91540ad4e3",
+      "TraderId": "58330581ace78e27b8b10cee",
+      "QuestId": "60e71c11d54b755a3b53eb65",
+      "ItemAssortId": "691462570a0bb78a4a05fb7e",
+      "QuestAssortId": "69145ae60a0bb78a4a05fb71"
+    }
+  }
+}

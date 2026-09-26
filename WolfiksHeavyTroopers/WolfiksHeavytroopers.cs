@@ -22,7 +22,7 @@ public record ModMetadata : AbstractModMetadata
 
     public override List<string>? Incompatibilities { get; init; }
     public override Dictionary<string, SemanticVersioning.Range>? ModDependencies { get; init; }
-    public override string? Url { get; init; } = "https://forge.sp-tarkov.com/mod/1569/wolfiks-heavy-trooper-masks-reupload";
+    public override string? Url { get; init; } = "https://sp-mod.com/mod/1569/wolfiks-heavy-trooper-masks-reupload";
     public override bool? IsBundleMod { get; init; } = true;
     public override string? License { get; init; } = "Creative Commons BY-NC-SA 3.0 ";
     public override string ModGuid { get; init; } = "com.hood.wolfiksheavytroopers";
@@ -34,7 +34,7 @@ public class WolfiksHeavyTroopers(
     ConfigServer configServer,
     CustomItemService customItemService,
     ModHelper modHelper,
-    DatabaseService databaseService,
+    DatabaseService ds,
     DatabaseServer db
     )
     : IOnLoad
@@ -44,24 +44,25 @@ public class WolfiksHeavyTroopers(
     {
         var pathToMod = modHelper.GetAbsolutePathToModFolder(Assembly.GetExecutingAssembly());
         var configPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(pathToMod, "config"));
+        var maskPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(pathToMod, "db"));
         var itemPropsPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(pathToMod, "locales"));
-        var modConfig = modHelper.GetJsonDataFromFile<ModConfig>(configPath, "config.jsonc");
+        var config = modHelper.GetJsonDataFromFile<ModConfig>(configPath, "config.jsonc");
+        var masks = modHelper.GetJsonDataFromFile<Masks>(maskPath, "MaskProps.json");
+        var locales = modHelper.GetJsonDataFromFile<Locales>(itemPropsPath, "locales.json");
+        var maskUtil = new MaskUtil(db, ds, logger, config, masks, locales);
         var ragfairConfig = configServer.GetConfig<RagfairConfig>();
-        var masks = modHelper.GetJsonDataFromFile<Masks>(itemPropsPath, "en.json");
         var tables = db.GetTables();
-        var ItemCreator = new ItemCreator(logger, modConfig, masks);
-        var traderHelper = new TraderHelper(db, databaseService, logger, modConfig, masks);
-        var botHelper = new BotHelper(db, databaseService, logger, modConfig, masks);
-        var maskUtil = new MaskUtil();
+        var ItemCreator = new ItemCreator(maskUtil);
+        var traderHelper = new TraderHelper(maskUtil);
+        var botHelper = new BotHelper(maskUtil);
         ItemCreator.BuildItems(customItemService);
-        traderHelper.addMasksToTrader("5935c25fb3acc3127c3d8cd9");
+        traderHelper.addMasksToTrader();
         traderHelper.addMasksToQuests();
         botHelper.addCultistMaskToCultistLoadout();
 
-
         foreach (var (maskName, maskProps) in masks.Items)
         {
-            if (!modConfig.Config[maskName].enable) continue;
+            if (!config.Items[maskName].enable) continue;
             if (tables?.Templates?.Items == null) continue;
 
             // Add masks to every helmet filter
@@ -72,14 +73,13 @@ public class WolfiksHeavyTroopers(
                     currentHelmet.Properties?.Slots?.ElementAt(1).Properties?.Filters?.ElementAt(0).Filter?.Add(maskProps.Id);
                 }
             }
-            foreach (var currentFaceConvering in maskUtil.conflictingFaceCoverings)
+            foreach (var helmet in maskUtil.tcgHelmets)
             {
-                if (tables.Templates.Items.TryGetValue(maskProps.Id, out var currentMask))
+                if (tables.Templates.Items.TryGetValue(helmet, out var currentHelmet))
                 {
-                    currentMask.Properties?.ConflictingItems?.Remove(currentFaceConvering);
+                    currentHelmet.Properties?.Slots?.ElementAt(3).Properties?.Filters?.ElementAt(0).Filter?.Add(maskProps.Id);
                 }
             }
-
             foreach (var helmet in maskUtil.artemHelmets)
             {
                 if (tables.Templates.Items.TryGetValue(helmet, out var currentHelmet))
@@ -87,9 +87,16 @@ public class WolfiksHeavyTroopers(
                     currentHelmet.Properties?.Slots?.ElementAt(0).Properties?.Filters?.ElementAt(0).Filter?.Add(maskProps.Id);
                 }
             }
+            foreach (var currentFaceConvering in maskUtil.conflictingFaceCoverings)
+            {
+                if (tables.Templates.Items.TryGetValue(maskProps.Id, out var currentMask))
+                {
+                    currentMask.Properties?.ConflictingItems?.Remove(currentFaceConvering);
+                }
+            }
         }
 
-        foreach (var (maskConfigName, maskConfigProps) in modConfig.Config)
+        foreach (var (maskConfigName, maskConfigProps) in config.Items)
         {
             if (!maskConfigProps.enable) continue;
 

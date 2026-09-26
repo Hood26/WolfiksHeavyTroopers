@@ -1,26 +1,32 @@
 {
   // Mod Configurations For WolfiksHeavyTroopers
   // ======================================
-  // Any true/false or integers can be changed and will be set on SPT server restart.
-  // DO NOT edit any of the string names for any and all config option as that WILL cause issues.
-  "Config": {
+  // Any values you change will be set on SPT server restart.
+  "Items": {
     "Coyote_Mask": {
-      // enables or disables the mask in-game.
-      // IMPORTANT: if you disable any mask you MUST make sure you have deleted or sold any left over masks in your inventory and on your PMC
-      //   or the server will throw errors at you and mess up your save file!!!!
+      // Enables or disables the mask in-game.
+      // IMPORTANT: If you disable a mask you MUST delete all occurances of the mask in your inventory and on your PMC or the server will throw errors about your profile being invalid
       "enable": true,
-      // toggles whether the mask will be sold by Peacekeeper in-game
+      // Toggles whether the mask will be sold by Peacekeeper in-game
       "sold_by_trader": true,
-      // toggles whether mask is locked behind quest reward
+      // Trader that sells the mask and used to determine trader questline if a quest is required for the mask
+      // Available trader options (must be all lowercased exactly as follows): "peacekeeper", "prapor", "skier", "mechanic", "jaeger", "ragman", "therapist"
+      "trader": "peacekeeper",
+      // Determines the currency the trader will sell the mask for. Options include: "dollars", "roubles", and "euros"
+      "trader_currency_type": "dollars",
+      // Toggles whether mask is locked behind quest reward
       "quest_required": false,
+      // Determines which quest the mask will be unlocked at. Can be left empty if quest_required is false.
+      // If you would like to change the quest you can find the quest ids at: SPT/SPT_Data/database/templates/quests.json
+      "quest_id": "",
       // toggles whether the mask will be able to be bought and sold on the flea-market
       "flea_banned": false,
       // Price of the mask in Dollars sold by Peacekeeper
-      "trader_price": 1200,
+      "trader_price": 1000,
       // Price in Roubles for the average selling price on the flea-market
-      "flea_price": 260000,
+      "flea_price": 180000,
       // The Quick Sell price of the mask when sold to a trader (Kinda)
-      "handbook_price": 150000,
+      "handbook_price": 140000,
       // How many masks that can be bought from trader during refresh period
       "trader_stock": 2,
       // Loyalty level the mask will be sold from Peacekeeper
@@ -55,10 +61,12 @@
     "Tan_Mask": {
       "enable": true,
       "sold_by_trader": true,
+      "trader": "peacekeeper",
+      "trader_currency_type": "dollars",
       "quest_required": false,
       "flea_banned": false,
-      "trader_price": 2000,
-      "flea_price": 380000,
+      "trader_price": 1800,
+      "flea_price": 320000,
       "handbook_price": 250000,
       "trader_stock": 2,
       "loyalty_level": 4,
@@ -74,17 +82,18 @@
         "wooden_crate_5x2": 25,
         "duffle_bag_4x3": 35,
         "dead_scav_4x4": 35
-
       }
     },
     "Black_Mask": {
       "enable": true,
       "sold_by_trader": true,
+      "trader": "peacekeeper",
+      "trader_currency_type": "dollars",
       "quest_required": false,
       "flea_banned": false,
       "trader_price": 2000,
-      "flea_price": 380000,
-      "handbook_price": 250000,
+      "flea_price": 350000,
+      "handbook_price": 280000,
       "trader_stock": 2,
       "loyalty_level": 4,
       "armor_class_level": 4,
@@ -104,11 +113,13 @@
     "Wolf_Mask": {
       "enable": true,
       "sold_by_trader": true,
-      "quest_required": true, // Peacekeeper "Wet Job - Part 5" Quest
+      "trader": "peacekeeper",
+      "trader_currency_type": "dollars",
+      "quest_required": false, // Peacekeeper "The Guide" Quest
       "flea_banned": true,
       "trader_price": 3000,
-      "flea_price": 550000,
-      "handbook_price": 350000,
+      "flea_price": 500000,
+      "handbook_price": 400000,
       "trader_stock": 2,
       "loyalty_level": 4,
       "armor_class_level": 5,
@@ -128,11 +139,13 @@
     "Cultist_Mask": {
       "enable": true,
       "sold_by_trader": true,
-      "quest_required": true, // Peacekeeper "The Guide" Quest
+      "trader": "skier",
+      "trader_currency_type": "roubles",
+      "quest_required": false, // Skier "Night Sweep" Quest
       "flea_banned": true,
-      "trader_price": 3500,
+      "trader_price": 450000,
       "flea_price": 666666,
-      "handbook_price": 400000,
+      "handbook_price": 550000,
       "trader_stock": 2,
       "loyalty_level": 4,
       "armor_class_level": 5,

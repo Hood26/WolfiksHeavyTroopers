@@ -1,6 +1,7 @@
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Enums;
 using SPTarkov.Server.Core.Models.Common;
+using SPTarkov.Server.Core.Utils.Json;
 
 namespace WolfiksHeavyTroopers;
 
@@ -10,12 +11,11 @@ class TraderHelper(MaskUtil maskUtil)
 
     public void addMasksToTrader()
     {
-        var assortCreator = new FluentTraderAssortCreator(maskUtil.ds, maskUtil.logger);
+        var assortCreator = new FluentTraderAssortCreator(maskUtil.traderTable, maskUtil.logger);
 
         foreach (var (name, props) in maskUtil.config.Items)
         {
             if(!props.enable) continue;
-            
             if (props.sold_by_trader)
             {
                 MongoId traderId = maskUtil.traderMap[maskUtil.config.Items[name].trader];
@@ -49,8 +49,7 @@ class TraderHelper(MaskUtil maskUtil)
 
     public void addMasksToQuests()
     {
-        var tables = maskUtil.db.GetTables();
-        var quests = tables.Templates.Quests;
+        var quests = maskUtil.templateTable.Quests;
         //MongoId peacekeeper = "5935c25fb3acc3127c3d8cd9";
 
         foreach (var (maskName, maskProps) in maskUtil.masks.Items)
@@ -58,9 +57,10 @@ class TraderHelper(MaskUtil maskUtil)
             if (!maskUtil.config.Items[maskName].enable) continue;
             if (!maskUtil.config.Items[maskName].quest_required) continue;
 
-            MongoId traderId = maskUtil.traderMap[maskUtil.config.Items[maskName].trader];
+            string traderId = maskUtil.traderMap[maskUtil.config.Items[maskName].trader];
+            StringOrInt _traderId = new(traderId, null); // wtf is this
             // Add masks to Peacekeeper QuestAssort
-            if (tables.Traders.TryGetValue(traderId, out var trader)) {
+            if (maskUtil.traderTable.TryGetValue(traderId, out var trader)) {
                 //logger.Success($"Adding {maskName} to Peacekeeper QuestAssort");
                 trader.QuestAssort["success"].Add(maskUtil.masks.Items[maskName].ItemAssortId, maskUtil.masks.Items[maskName].QuestId);
             }
@@ -86,7 +86,7 @@ class TraderHelper(MaskUtil maskUtil)
                     ],
                     LoyaltyLevel = 4,
                     Target = maskProps.ItemAssortId,
-                    TraderId = traderId,
+                    TraderId = _traderId,
                     Type = RewardType.AssortmentUnlock,
                     Unknown = false
                 };

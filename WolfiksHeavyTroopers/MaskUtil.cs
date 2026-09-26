@@ -1,12 +1,13 @@
-using SPTarkov.Server.Core.Models.Utils;
-using SPTarkov.Server.Core.Servers;
-using SPTarkov.Server.Core.Services;
+using SPTarkov.Common.Models.Logging;
+using SPTarkov.Server.Core.Models.Spt.Tables;
 
 namespace WolfiksHeavyTroopers;
 
 class MaskUtil(
-    DatabaseServer db,
-    DatabaseService ds,
+    TemplateTable templateTable,
+    LocationTable locationTable,
+    TradersTable traderTable,
+    BotTable botTable,
     ISptLogger<WolfiksHeavyTroopers> logger,
     ModConfig config,
     Masks masks,
@@ -14,8 +15,10 @@ class MaskUtil(
     )
 {
 
-    public readonly DatabaseServer db = db;
-    public readonly DatabaseService ds = ds;
+    public readonly TemplateTable templateTable = templateTable;
+    public readonly LocationTable locationTable = locationTable;
+    public readonly TradersTable traderTable = traderTable;
+    public readonly BotTable botTable = botTable;
     public readonly ISptLogger<WolfiksHeavyTroopers> logger = logger;
     public readonly ModConfig config = config;
     public readonly Masks masks = masks;

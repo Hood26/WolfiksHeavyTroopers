@@ -10,9 +10,8 @@ class BotHelper(MaskUtil maskUtil)
     public void addCultistMaskToCultistLoadout()
     {
         if (!maskUtil.config.Items["Cultist_Mask"].enable) return;
-        var tables = maskUtil.db.GetTables();
 
-        if (tables.Bots.Types.TryGetValue("sectantwarrior", out var cultist))
+        if (maskUtil.botTable.Types.TryGetValue("sectantwarrior", out var cultist))
         {
             // 15% chance to spawn with helmet - the chance face covering stops it?? 15% *.65 = 9.75 aprox
             cultist.BotChances.EquipmentChances["Headwear"] = 15;

@@ -115,7 +115,7 @@
       "sold_by_trader": true,
       "trader": "peacekeeper",
       "trader_currency_type": "dollars",
-      "quest_required": false, // Peacekeeper "The Guide" Quest
+      "quest_required": true, // Peacekeeper "The Guide" Quest
       "flea_banned": true,
       "trader_price": 3000,
       "flea_price": 500000,
@@ -141,7 +141,7 @@
       "sold_by_trader": true,
       "trader": "skier",
       "trader_currency_type": "roubles",
-      "quest_required": false, // Skier "Night Sweep" Quest
+      "quest_required": true, // Skier "Night Sweep" Quest
       "flea_banned": true,
       "trader_price": 450000,
       "flea_price": 666666,

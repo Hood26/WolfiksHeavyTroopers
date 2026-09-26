@@ -1,45 +1,28 @@
 ﻿using System.Reflection;
 using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.DI;
-using SPTarkov.Server.Core.Helpers;
-using SPTarkov.Server.Core.Models.Spt.Mod;
-using SPTarkov.Server.Core.Models.Utils;
-using SPTarkov.Server.Core.Servers;
-using SPTarkov.Server.Core.Services;
-using SPTarkov.Server.Core.Services.Mod;
 using SPTarkov.Server.Core.Models.Spt.Config;
 using SPTarkov.Server.Core.Models.Eft.Common;
+using SPTarkov.Common.Models.Logging;
+using SPTarkov.Server.Core.Services.Modding.Custom;
+using SPTarkov.Server.Core.Helpers.Server;
+using SPTarkov.Server.Core.Models.Spt.Tables;
 namespace WolfiksHeavyTroopers;
 
-public record ModMetadata : AbstractModMetadata
-{
-    public override string Name { get; init; } = "Wolfiks Heavy Troopers";
-    public override string Author { get; init; } = "Hood";
-    public override List<string>? Contributors { get; init; }
-    public override SemanticVersioning.Version Version { get; init; } = new("1.1.1");
-    public override SemanticVersioning.Range SptVersion { get; init; } = new("~4.0.0");
-
-
-    public override List<string>? Incompatibilities { get; init; }
-    public override Dictionary<string, SemanticVersioning.Range>? ModDependencies { get; init; }
-    public override string? Url { get; init; } = "https://sp-mod.com/mod/1569/wolfiks-heavy-trooper-masks-reupload";
-    public override bool? IsBundleMod { get; init; } = true;
-    public override string? License { get; init; } = "Creative Commons BY-NC-SA 3.0 ";
-    public override string ModGuid { get; init; } = "com.hood.wolfiksheavytroopers";
-}
-
-[Injectable(TypePriority = OnLoadOrder.PostDBModLoader + 10)]
+[Injectable(TypePriority = OnLoadOrder.Preload + 5)]
 public class WolfiksHeavyTroopers(
     ISptLogger<WolfiksHeavyTroopers> logger,
-    ConfigServer configServer,
+    RagfairConfig ragfairConfig,
     CustomItemService customItemService,
     ModHelper modHelper,
-    DatabaseService ds,
-    DatabaseServer db
+    TemplateTable templateTable,
+    LocationTable locationTable,
+    BotTable botTable,
+    TradersTable traderTable
     )
     : IOnLoad
 {
-    public Task OnLoad()
+    public Task OnLoadAsync(CancellationToken cancellationToken)
     {
         var pathToMod = modHelper.GetAbsolutePathToModFolder(Assembly.GetExecutingAssembly());
         var configPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(pathToMod, "config"));
@@ -48,9 +31,7 @@ public class WolfiksHeavyTroopers(
         var config = modHelper.GetJsonDataFromFile<ModConfig>(configPath, "config.jsonc");
         var masks = modHelper.GetJsonDataFromFile<Masks>(maskPath, "MaskProps.json");
         var locales = modHelper.GetJsonDataFromFile<Locales>(itemPropsPath, "locales.json");
-        var maskUtil = new MaskUtil(db, ds, logger, config, masks, locales);
-        var ragfairConfig = configServer.GetConfig<RagfairConfig>();
-        var tables = db.GetTables();
+        var maskUtil = new MaskUtil(templateTable, locationTable, traderTable, botTable, logger, config, masks, locales);
         var ItemCreator = new ItemCreator(maskUtil);
         var traderHelper = new TraderHelper(maskUtil);
         var botHelper = new BotHelper(maskUtil);
@@ -62,26 +43,26 @@ public class WolfiksHeavyTroopers(
         foreach (var (maskName, maskProps) in masks.Items)
         {
             if (!config.Items[maskName].enable) continue;
-            if (tables?.Templates?.Items == null) continue;
+            if (templateTable.Items == null) continue;
 
             // Add masks to every helmet filter
             foreach (var helmet in maskUtil.helmets)
             {
-                if (tables.Templates.Items.TryGetValue(helmet, out var currentHelmet))
+                if (templateTable.Items.TryGetValue(helmet, out var currentHelmet))
                 {
                     currentHelmet.Properties?.Slots?.ElementAt(1).Properties?.Filters?.ElementAt(0).Filter?.Add(maskProps.Id);
                 }
             }
             foreach (var helmet in maskUtil.artemHelmets)
             {
-                if (tables.Templates.Items.TryGetValue(helmet, out var currentHelmet))
+                if (templateTable.Items.TryGetValue(helmet, out var currentHelmet))
                 {
                     currentHelmet.Properties?.Slots?.ElementAt(0).Properties?.Filters?.ElementAt(0).Filter?.Add(maskProps.Id);
                 }
             }
             foreach (var currentFaceConvering in maskUtil.conflictingFaceCoverings)
             {
-                if (tables.Templates.Items.TryGetValue(maskProps.Id, out var currentMask))
+                if (templateTable.Items.TryGetValue(maskProps.Id, out var currentMask))
                 {
                     currentMask.Properties?.ConflictingItems?.Remove(currentFaceConvering);
                 }
@@ -103,8 +84,8 @@ public class WolfiksHeavyTroopers(
             {
                 foreach (var map in maskUtil.maps)
                 {
-                    string mapName = tables.Locations.GetMappedKey(map);
-                    var location = tables.Locations.GetDictionary()[mapName];
+                    string mapName = locationTable.GetMappedKey(map);
+                    var location = locationTable.GetDictionary()[mapName];
                     var mapStaticLoot = location?.StaticLoot?.Value;
                     var staticLooProbabilities = maskConfigProps.static_loot_container_probabilities;
 
@@ -142,7 +123,7 @@ public class WolfiksHeavyTroopers(
                 }
             }
         }
-        logger.Success("[Wolfiks Heavy Troopers] Successfully added to server!");
+        logger.Success("[Wolfiks Heavy Trooper Masks] Successfully added to server!");
         return Task.CompletedTask;
     }
 

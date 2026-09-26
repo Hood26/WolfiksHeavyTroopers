@@ -1,6 +1,6 @@
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Spt.Mod;
-using SPTarkov.Server.Core.Services.Mod;
+using SPTarkov.Server.Core.Services.Modding.Custom;
 
 namespace WolfiksHeavyTroopers;
 
@@ -30,6 +30,7 @@ class ItemCreator(MaskUtil maskUtil)
                 },
                 ParentId = "57bef4c42459772e8d35a53b",
                 NewId = maskUtil.masks.Items[name].Id,
+                NewItemName = name,
                 FleaPriceRoubles = props.flea_price,
                 HandbookPriceRoubles = props.handbook_price,
                 HandbookParentId = "5b5f704686f77447ec5d76d7",
